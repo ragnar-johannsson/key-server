@@ -1,0 +1,26 @@
+### Vim ###
+# swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+# session
+Session.vim
+# temporary
+.netrwhist
+*~
+# auto-generated tag files
+tags
+
+### F# ###
+lib/debug
+lib/release
+Debug
+*.suo
+*.user
+obj/
+bin/
+*.exe
+!.paket/paket.bootstrapper.exe
+project.lock.json
+
+### OSX ###
+*.DS_Store
