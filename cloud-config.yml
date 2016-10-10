@@ -1,0 +1,62 @@
+#cloud-config
+coreos:
+  units:
+    - name: "key-server.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Key server
+        After=docker.service
+
+        [Service]
+        EnvironmentFile=-/etc/default/key-server
+        ExecStartPre=-/bin/docker rm -f key-server
+        ExecStartPre=-/bin/docker pull ragnarb/key-server
+        ExecStart=/bin/docker run --name key-server $OPTS ragnarb/key-server
+        Restart=on-failure
+
+        [Install]
+        WantedBy=multi-user.target
+    - name: "caddy.service"
+      command: "start"
+      content: |
+        [Unit]
+        Description=Caddy HTTP/2 server
+        After=key-server.service docker.service
+        Requires=key-server.service
+
+        [Service]
+        EnvironmentFile=-/etc/default/caddy
+        ExecStartPre=-/bin/docker rm -f caddy
+        ExecStartPre=-/bin/docker pull abiosoft/caddy
+        ExecStart=/bin/docker run --name caddy $OPTS abiosoft/caddy
+        Restart=on-failure
+
+        [Install]
+        WantedBy=multi-user.target
+
+write_files:
+  - path: "/etc/default/key-server"
+    permissions: "0644"
+    owner: "root"
+    content: |
+      OPTS="-v /opt/keys:/opt/keys"
+  - path: "/etc/default/caddy"
+    permissions: "0644"
+    owner: "root"
+    content: |
+      OPTS="-p 80:80 -p 443:443 --link key-server:key-server -v /opt/caddy/Caddyfile:/etc/Caddyfile -v /opt/caddy/certs:/root/.caddy -v /opt/caddy/log:/var/log/caddy"
+  - path: "/opt/caddy/Caddyfile"
+    permissions: "0644"
+    owner: "root"
+    content: |
+      http://my.key.server https://my.key.server {
+          proxy / key-server:3000
+          tls email@my.key.server
+
+          log /var/log/caddy/access.log {
+              rotate {
+                  age 90
+              }
+          }
+      }
