@@ -11,7 +11,8 @@ let router =
     choose [
         GET >=> pathScan "/%s" Handlers.getKeys
         RequestErrors.BAD_REQUEST ""
-    ] >=> Writers.setMimeType "text/plain"
+    ]
+    >=> Writers.setMimeType "text/plain"
     >=> log logger logFormat
 
 let config = {
