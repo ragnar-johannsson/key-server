@@ -1,6 +1,6 @@
 ## Key Server
 
-An API server delivering SSH public keys for users and groups, allowing the creation of users through a simple `curl keyserver/<user or group> | sh`. The structure of groups of users can be nested or as flat as required.
+An API server delivering SSH public keys for users and groups, allowing the creation of users through a simple `curl keyserver/<user or group> | sh`. The structure of user groups can be as nested or as flat as required.
 
 ### Setup & usage
 
@@ -23,6 +23,10 @@ A sample key dir tree should thus look something like:
 ```
 
 Calling a `curl keyserver/group1 | sh` in this case would create users for both Alice and Bob using the keys in the *authorized_keys* file under their respective directories.
+
+### Further details
+
+See [Config.fs](Config.fs) for details on environment variables exposed for further fine-tuning, such as providing your own user creation script template.
 
 ### Disclaimer
 
