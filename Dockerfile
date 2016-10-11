@@ -1,7 +1,7 @@
 FROM microsoft/dotnet:latest
 MAINTAINER Ragnar B. Johannsson <ragnar@igo.is>
 
-ADD *.fs NuGet.Config project.json create_user.sh /app/
+ADD *.fs *.sh NuGet.Config project.json /app/
 
 WORKDIR /app
 
