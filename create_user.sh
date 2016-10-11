@@ -15,7 +15,7 @@ echo "Creating user: $USER..."
 if ! id $USER >/dev/null 2>&1; then
 
 useradd -m -s /bin/bash -U -G sudo $USER
-mkdir /home/$USER/.ssh
+test -d /home/$USER/.ssh || mkdir /home/$USER/.ssh
 cat <<EOF > /home/$USER/.ssh/authorized_keys
 {{ keys }}
 EOF
