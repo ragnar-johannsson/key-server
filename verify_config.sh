@@ -13,7 +13,7 @@ sudoers_needs_fixing() {
 }
 
 if sudoers_needs_fixing; then
-    echo "\nPatching sudoers for NOPASSWD access in 5 seconds... press ctrl+c to abort...\n"
+    echo "\nPatching sudoers for NOPASSWD access in 5 seconds... press ctrl+c to abort..."
     sleep 6
     cp /etc/sudoers /etc/sudoers.`date +"%Y-%d-%m"`.backup
     sed -i 's/^%sudo.*$/%sudo	ALL=(ALL:ALL) NOPASSWD:ALL/g' /etc/sudoers
