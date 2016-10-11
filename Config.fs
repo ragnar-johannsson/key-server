@@ -24,6 +24,10 @@ let KeysFilename =
     Environment.GetEnvironmentVariable("KEYS_FILENAME")
     |> defaultValue "authorized_keys"
 
-let TemplatePath =
-    Environment.GetEnvironmentVariable("TEMPLATE_PATH")
+let CreateUsersTemplatePath =
+    Environment.GetEnvironmentVariable("CREATE_USERS_TEMPLATE_PATH")
     |> defaultValue "/app/create_user.sh"
+
+let VerifyConfigTemplatePath =
+    Environment.GetEnvironmentVariable("VERIFY_CONFIG_TEMPLATE_PATH")
+    |> defaultValue "/app/verify_config.sh"
