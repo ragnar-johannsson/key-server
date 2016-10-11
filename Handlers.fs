@@ -17,5 +17,6 @@ let getKeys name =
     |> sanitize
     |> Keys.getKeysforUserOrGroup
     |> Templates.createUsers
+    |> Templates.verifyConfig
     |> response
 
