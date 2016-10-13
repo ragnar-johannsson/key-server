@@ -12,11 +12,17 @@ let response output =
     | true  -> RequestErrors.NOT_FOUND ""
     | false -> output |> Successful.OK
 
-let getKeys name =
+let getKeysHandler name ttl =
     name
     |> sanitize
     |> Keys.getKeysforUserOrGroup
-    |> Templates.createUsers
+    |> Templates.createUsers ttl
     |> Templates.verifyConfig
     |> response
 
+let getKeys name =
+    getKeysHandler name 0
+
+let getKeysWithTTL p =
+    let name, ttl = p
+    getKeysHandler name ttl
