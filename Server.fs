@@ -9,6 +9,7 @@ let logger = Targets.create Verbose
 
 let router =
     choose [
+        GET >=> pathScan "/%s/%d" Handlers.getKeysWithTTL
         GET >=> pathScan "/%s" Handlers.getKeys
         RequestErrors.BAD_REQUEST ""
     ]
