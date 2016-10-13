@@ -12,14 +12,15 @@ let verifyConfigTemplate =
 let replace (pattern : string) (replacement : string) (input : string) =
     Regex.Replace (input, pattern, replacement)
 
-let applyCreateUsersTemplate user =
+let applyCreateUsersTemplate ttl user =
     createUsersTemplate.Force()
     |> replace "{{ user }}" (fst user)
     |> replace "{{ keys }}" (snd user)
+    |> replace "{{ ttl }}" (ttl.ToString())
 
-let createUsers input =
-    input
-    |> List.map applyCreateUsersTemplate
+let createUsers ttl users =
+    users
+    |> List.map (applyCreateUsersTemplate ttl)
     |> String.concat "\n"
 
 let verifyConfig input =
