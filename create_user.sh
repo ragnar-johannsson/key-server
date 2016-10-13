@@ -1,6 +1,7 @@
 #!/bin/sh
 
 USER="{{ user }}"
+TTL="{{ ttl }}"
 DEPENDENCIES="sudo useradd"
 
 for DEPENDENCY in $DEPENDENCIES; do
@@ -20,6 +21,10 @@ cat <<EOF > /home/$USER/.ssh/authorized_keys
 {{ keys }}
 EOF
 chown -R $USER:$USER /home/$USER/.ssh
+
+if [ "$TTL" -gt 0 ]; then
+    systemd-run --on-active=${TTL}d /usr/sbin/useradd $USER
+fi
 
 else
     echo "User $USER already exists. Skipping..."
