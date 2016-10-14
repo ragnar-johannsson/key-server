@@ -24,6 +24,17 @@ A sample key dir tree should thus look something like:
 
 Calling a `curl keyserver/group1 | sh` in this case would create users for both Alice and Bob using the keys in the *authorized_keys* file under their respective directories.
 
+### Temporary users
+
+Temporary users can be created by calling a username followed by a time-to-live in days. For example:
+
+```
+$ curl keyserver/bob/10
+```
+
+will create the user 'bob' and, after ten days delete him again - along with his home directory and any other files as targeted by userdel.
+
+
 ### Further details
 
 See [Config.fs](Config.fs) for details on environment variables exposed for further fine-tuning, such as providing your own user creation script template.
