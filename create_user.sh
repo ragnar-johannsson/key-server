@@ -2,7 +2,7 @@
 
 USER="{{ user }}"
 TTL="{{ ttl }}"
-DEPENDENCIES="sudo useradd"
+DEPENDENCIES="sudo useradd userdel at"
 
 for DEPENDENCY in $DEPENDENCIES; do
     if ! which $DEPENDENCY >/dev/null 2>&1; then
