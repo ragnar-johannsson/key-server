@@ -23,7 +23,7 @@ EOF
 chown -R $USER:$USER /home/$USER/.ssh
 
 if [ "$TTL" -gt 0 ]; then
-    systemd-run --on-active=${TTL}d /usr/sbin/useradd $USER
+    echo "/usr/sbin/userdel -rf $USER" | at "now + $TTL days"
 fi
 
 else
