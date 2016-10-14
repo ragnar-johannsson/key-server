@@ -3,9 +3,11 @@ VERSION=$(shell git describe --long --tags master | cut -d - -f 1-1)
 
 default: build
 
+.PHONY: deps
 deps:
 	dotnet restore
 
+.PHONY: build
 build: deps
 	dotnet build
 
